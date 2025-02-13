@@ -40,31 +40,26 @@ export async function getProduct({ id }: { id: string }) {
 }
 
 export async function createProduct(productData: Omit<Product, "id">) {
-  const query = `mutation CreateProduct {
-      createProduct(
-          createProductInput: {
-              name: "${productData.name}"
-              description: "${productData.description}"
-              price: ${productData.price}
-              stock: ${productData.stock}
-              categories: "${productData.categories}"
-          }
-      ) {
+  const query = ` mutation CreateProduct($input: CreateProductInput!) {
+        createProduct(createProductInput: $input) {
           data {
-              id
-              name
-              description
-              price
-              stock
-              categories
+            id
+            name
+            description
+            price
+            stock
+            categories
           }
-      }
-  }`;
+        }
+      }`;
 
   const response = await instance.post(
     "/graphql",
     {
       query,
+      variables: {
+        input: productData,
+      },
     },
     {
       headers: {
@@ -73,10 +68,8 @@ export async function createProduct(productData: Omit<Product, "id">) {
       },
     }
   );
-  console.log("created product", response.data.e);
   if ("errors" in response.data) {
     throw new Error(response.data.errors[0].message);
   }
   return response.data.data.createProduct.data;
-  // return response.data.data.createProduct;
 }
