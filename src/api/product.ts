@@ -13,7 +13,6 @@ export async function getProductCategories() {
     }
 }`,
   });
-  console.log(response.data.data.productCategories.categories);
   return response.data.data.productCategories.categories;
 }
 
@@ -21,7 +20,7 @@ export async function getProduct({ id }: { id: string }) {
   const response = await instance.post("/graphql", {
     query: `
       query Product {
-    product(id: ${id}) {
+    product(id: "${id}") {
         data {
             id
             name
@@ -34,6 +33,43 @@ export async function getProduct({ id }: { id: string }) {
 }
 
     `,
+  });
+
+  return response.data.data.products;
+}
+
+export async function getAllProducts({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}) {
+  const query = `query Products($limit: Int!, $page: Int!) {
+    products(limit: $limit, page: $page) {
+        data {
+            id
+            name
+            description
+            price
+            stock
+            categories
+        }
+        pagination {
+            limit
+            page
+            total
+        }
+    }
+}
+`;
+
+  const response = await instance.post("/graphql", {
+    query,
+    variables: {
+      limit,
+      page,
+    },
   });
 
   return response.data.data.products;

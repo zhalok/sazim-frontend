@@ -3,11 +3,6 @@ import { Product } from "@/types/Product";
 
 interface ProductsProps {
   products: Product[];
-  pagination?: {
-    limit: number;
-    page: number;
-    total: number;
-  };
 }
 
 export const Products = ({ products }: ProductsProps) => {

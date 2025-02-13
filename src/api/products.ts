@@ -1,20 +1,16 @@
 import instance from ".";
 
 export async function getProducts({
-  name,
   page = 1,
   limit = 10,
-  categories,
 }: {
   page: number;
   limit: number;
-  name: string;
-  categories: string[];
 }) {
   const response = await instance.post("/graphql", {
     query: `
       query Products {
-    products(limit: ${limit}, page: ${page}, filter: { name: ${name} categories: ${categories}}) {
+    products(limit: ${limit}, page: ${page}) {
         pagination {
             limit
             page
@@ -72,18 +68,19 @@ export async function getMyProducts({
           limit,
           page,
         },
-      },{
+      },
+      {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      } 
+      }
     );
-    console.log("response",response)
-    return response.data.data.myProducts
+    console.log("response", response);
+    return response.data.data.myProducts;
   } catch (error) {
-    console.log("hello")
-    
+    console.log("hello");
+
     console.error("Error fetching products:", error);
   }
 }
