@@ -134,7 +134,7 @@ export async function getMyOrders({
     {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer YOUR_ACCESS_TOKEN`, // Replace with actual token if needed
+        Authorization: `Bearer ${sessionStorage.getItem("customerToken")}`, // Replace with actual token if needed
       },
     }
   );
@@ -172,4 +172,31 @@ export async function cancelOrder({
   });
 
   return response.data.data.cancelOrder;
+}
+
+export async function createToken(email: string) {
+  const mutation = `
+      mutation CreateToken($email: String!) {
+          createToken(email: $email)
+      }
+  `;
+
+  const variables = {
+    email,
+  };
+
+  try {
+    const response = await instance.post(graphqlEndpoint, {
+      query: mutation,
+      variables: variables,
+    });
+
+    console.log("Token Created:", response.data);
+  } catch (error) {
+    console.error(
+      "Error creating token:",
+      //@ts-ignore
+      error.response ? error.response.data : error.message
+    );
+  }
 }

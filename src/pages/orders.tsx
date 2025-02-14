@@ -14,6 +14,11 @@ export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
+  const customerToken = searchParams.get("customerToken");
+
+  if (customerToken) {
+    sessionStorage.setItem("customerToken", customerToken);
+  }
 
   const {
     data: ordersData,
