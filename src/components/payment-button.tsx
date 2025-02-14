@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function PaymentButton() {
+export default function PaymentButton({ paymentId }: { paymentId: string }) {
   const [isProcessing, setIsProcessing] = useState(false);
-
+  console.log("payment id", paymentId);
   const handlePayment = () => {
     setIsProcessing(true);
     // Simulate payment processing

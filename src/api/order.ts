@@ -68,3 +68,29 @@ export async function createOrder({
     throw error;
   }
 }
+
+export async function getOrder(id: string) {
+  const query = `
+   query Order {
+    order(id: "${id}") {
+        id
+        customerEmail
+        totalAmount
+        status
+        orderItems {
+            productId
+            quantity
+            product {
+                name
+                price
+            }
+        }
+        paymentId
+    }
+    }`;
+  const response = await instance.post(graphqlEndpoint, {
+    query: query,
+  });
+  console.log(response);
+  return response.data.data.order;
+}

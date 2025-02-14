@@ -9,9 +9,7 @@ export default function OrderItem({
         <span className="font-medium">{item.name}</span>
         <span className="text-gray-600 ml-2">x{item.quantity}</span>
       </div>
-      <span className="font-medium">
-        ${(item.price * item.quantity).toFixed(2)}
-      </span>
+      <span className="font-medium">${item.price * item.quantity}</span>
     </div>
   );
 }
