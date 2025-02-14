@@ -10,30 +10,40 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { createOrder } from "@/api/order";
-import { useToast } from "@/hooks/use-toast";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
+import { createOrder } from "@/api/order";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
-export default function OrderModal({}) {
+const orderTypes = [
+  {
+    label: "Purchase",
+    value: "PURCHASE",
+  },
+  {
+    label: "Rental",
+    value: "RENT",
+  },
+];
+
+export default function OrderModal() {
   const [searchParams] = useSearchParams();
   const selectedProduct = searchParams.get("product");
-  const [open, setOpen] = useState(selectedProduct ? true : false);
+  const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
     phone: "",
     orderType: "",
+    rentalPeriod: 0,
   });
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -76,6 +86,8 @@ export default function OrderModal({}) {
       customerName: formData.name,
       customerPhone: formData.phone,
       orderItems: [{ productId: selectedProduct, quantity: 1 }],
+      orderType: formData.orderType,
+      rentPeriodInDays: formData.rentalPeriod,
     });
 
     setOpen(false);
@@ -140,27 +152,39 @@ export default function OrderModal({}) {
             />
           </div>
           <div className="space-y-2">
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select a fruit" />
+            <Label htmlFor="orderType">Order Type</Label>
+            <Select
+              onValueChange={handleSelectChange}
+              value={formData.orderType}
+            >
+              <SelectTrigger id="orderType">
+                <SelectValue placeholder="Select order type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectGroup>
+                {orderTypes.map((orderType) => (
+                  <SelectItem key={orderType.value} value={orderType.value}>
+                    {orderType.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
-          <div>
-            <Button type="submit" className="w-full">
-              Place Order
-            </Button>
-          </div>
+          {formData.orderType === "RENT" && (
+            <div className="space-y-2">
+              <Label htmlFor="rentalPeriod">Rental Period (in days)</Label>
+              <Input
+                id="rentalPeriod"
+                name="rentalPeriod"
+                type="number"
+                value={formData.rentalPeriod}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          )}
+          <Button type="submit" className="w-full">
+            Place Order
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

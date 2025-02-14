@@ -9,11 +9,15 @@ export async function createOrder({
   customerPhone,
   customerAddress,
   orderItems,
+  orderType = "PURCHASE",
+  rentPeriodInDays,
 }: {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
   customerAddress: string;
+  orderType: string;
+  rentPeriodInDays?: number;
   orderItems: { productId: string; quantity: number }[];
 }) {
   const mutation = `
@@ -37,6 +41,8 @@ export async function createOrder({
       customerPhone,
       customerAddress,
       orderItems,
+      rentPeriodInDays: Number(rentPeriodInDays),
+      orderType,
     },
   };
 
