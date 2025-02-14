@@ -5,7 +5,7 @@ import PlaceOrderModal from "@/components/place-order-modal";
 import { Products } from "@/components/products";
 import { Button } from "@/components/ui/button";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const AllProducts = () => {
@@ -27,6 +27,12 @@ export const AllProducts = () => {
   });
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (searchParams.get("openEmailCollectionModal")) {
+      setShowEmailCollectionModal(true);
+    }
+  }, [searchParams]);
 
   if (isProductDataLoading) return <>Loading</>;
 

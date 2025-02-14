@@ -1,7 +1,7 @@
 import { getMyOrders } from "@/api/order";
 import { OrderList } from "@/components/orders-list";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const mockOrders = [
   { id: 1, totalAmount: 100, status: "Pending" },
@@ -15,6 +15,7 @@ export default function Orders() {
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const customerToken = searchParams.get("customerToken");
+  const navigate = useNavigate();
 
   if (customerToken) {
     sessionStorage.setItem("customerToken", customerToken);
@@ -35,7 +36,9 @@ export default function Orders() {
 
   if (isOrderDataLoading) return <>Loading</>;
 
-  if (orderError) return <>Error</>;
+  if (orderError) {
+    navigate("/?openEmailCollectionModal=true");
+  }
 
   if (!ordersData) return <>No Order Data</>;
 
