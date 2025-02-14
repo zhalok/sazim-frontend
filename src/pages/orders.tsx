@@ -3,15 +3,8 @@ import { OrderList } from "@/components/orders-list";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const mockOrders = [
-  { id: 1, totalAmount: 100, status: "Pending" },
-  { id: 2, totalAmount: 150, status: "Paid" },
-  { id: 3, totalAmount: 200, status: "Shipped" },
-  { id: 4, totalAmount: 75, status: "Pending" },
-];
-
 export default function Orders() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const customerToken = searchParams.get("customerToken");
