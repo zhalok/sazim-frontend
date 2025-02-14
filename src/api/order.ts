@@ -99,9 +99,11 @@ export async function getOrder(id: string) {
 export async function getMyOrders({
   limit,
   page,
+  customerToken,
 }: {
   limit: number;
   page: number;
+  customerToken: string;
 }) {
   const query = `
         query MyOrders($limit: Int!, $page: Int!) {
@@ -134,7 +136,7 @@ export async function getMyOrders({
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("customerToken")}`, // Replace with actual token if needed
+        Authorization: `Bearer ${customerToken}`, // Replace with actual token if needed
       },
     }
   );

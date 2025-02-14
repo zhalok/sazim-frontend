@@ -10,10 +10,6 @@ export default function Orders() {
   const customerToken = searchParams.get("customerToken");
   const navigate = useNavigate();
 
-  if (customerToken) {
-    sessionStorage.setItem("customerToken", customerToken);
-  }
-
   const {
     data: ordersData,
     isLoading: isOrderDataLoading,
@@ -23,6 +19,7 @@ export default function Orders() {
       getMyOrders({
         page: page,
         limit: 10,
+        customerToken: customerToken || "",
       }),
     queryKey: ["orders", page],
   });
