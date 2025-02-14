@@ -4,6 +4,7 @@ import LoginLayout from "./pages/auth/layout";
 import SellerLayout from "./pages/seller/layout";
 import { SellerProducts } from "./pages/seller/products";
 import { AllProducts } from "./pages/products";
+import Order from "./pages/order";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               <Route path="/seller/products" element={<SellerProducts />} />
             </Route>
             <Route index element={<AllProducts />} />
+            <Route path="/orders/:id" element={<Order />} />
           </Routes>
         </Router>
       </div>

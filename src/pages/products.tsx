@@ -1,4 +1,4 @@
-import { getAllProducts, getProductCategories } from "@/api/product";
+import { getAllProducts } from "@/api/product";
 import { PaginationBar } from "@/components/pagination";
 import { Products } from "@/components/products";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
