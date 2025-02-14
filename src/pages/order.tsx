@@ -47,7 +47,7 @@ export default function Order() {
         </div>
         <div className="space-y-6">
           <PaymentButton paymentId={orderData.paymentId} />
-          <OrderStatus />
+          <OrderStatus status={orderData.status} />
         </div>
       </div>
     </main>

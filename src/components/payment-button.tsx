@@ -1,23 +1,30 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { makePayment } from "@/api/payment";
 
 export default function PaymentButton({ paymentId }: { paymentId: string }) {
-  const [isProcessing, setIsProcessing] = useState(false);
-  console.log("payment id", paymentId);
+  const queryClient = useQueryClient();
+  const makePaymentMutation = useMutation({
+    mutationFn: makePayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["order"],
+      });
+    },
+  });
   const handlePayment = () => {
-    setIsProcessing(true);
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      alert("Payment processed successfully!");
-    }, 2000);
+    makePaymentMutation.mutate(paymentId);
   };
 
   return (
-    <Button onClick={handlePayment} disabled={isProcessing} className="w-full">
-      {isProcessing ? "Processing..." : "Pay Now"}
+    <Button
+      onClick={handlePayment}
+      disabled={makePaymentMutation.isPending}
+      className="w-full"
+    >
+      {makePaymentMutation.isPending ? "Processing..." : "Pay Now"}
     </Button>
   );
 }

@@ -86,6 +86,7 @@ export async function getOrder(id: string) {
             }
         }
         paymentId
+        paymentStatus
     }
     }`;
   const response = await instance.post(graphqlEndpoint, {
