@@ -95,3 +95,49 @@ export async function getOrder(id: string) {
   console.log(response);
   return response.data.data.order;
 }
+
+export async function getMyOrders({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}) {
+  const query = `
+        query MyOrders($limit: Int!, $page: Int!) {
+            myOrders(limit: $limit, page: $page) {
+                pagination {
+                    limit
+                    page
+                    total
+                }
+                data {
+                    id
+                    totalAmount
+                    status
+                   
+                }
+            }
+        }
+    `;
+
+  const variables = {
+    limit,
+    page,
+  };
+  const response = await instance.post(
+    graphqlEndpoint,
+    {
+      query: query,
+      variables: variables,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer YOUR_ACCESS_TOKEN`, // Replace with actual token if needed
+      },
+    }
+  );
+
+  return response.data.data.myOrders;
+}
