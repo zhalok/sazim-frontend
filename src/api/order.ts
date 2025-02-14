@@ -141,3 +141,35 @@ export async function getMyOrders({
 
   return response.data.data.myOrders;
 }
+
+export async function cancelOrder({
+  id,
+  email,
+  reason,
+}: {
+  id: string;
+  email: string;
+  reason: string;
+}) {
+  const mutation = `
+  mutation CancelOrder($id: String!, $email: String!, $reason: String!) {
+      cancelOrder(id: $id, email: $email, reason: $reason) {
+          id
+          status
+      }
+  }
+`;
+
+  const variables = {
+    id,
+    email,
+    reason,
+  };
+
+  const response = await instance.post(graphqlEndpoint, {
+    query: mutation,
+    variables: variables,
+  });
+
+  return response.data.data.cancelOrder;
+}

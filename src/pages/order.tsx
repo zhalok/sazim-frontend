@@ -46,7 +46,9 @@ export default function Order() {
           />
         </div>
         <div className="space-y-6">
-          <PaymentButton paymentId={orderData.paymentId} />
+          {orderData.status === "PENDING" && (
+            <PaymentButton paymentId={orderData.paymentId} />
+          )}
           <OrderStatus status={orderData.status} />
         </div>
       </div>
