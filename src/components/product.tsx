@@ -1,9 +1,15 @@
 import { Product } from "@/types/Product";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
+import { useSearchParams } from "react-router-dom";
 
 export const ProductCard: React.FC<{ data: Product }> = ({ data }) => {
   const { id, name, description, categories } = data;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const chooseProduct = () => {
+    searchParams.set("product", id);
+    setSearchParams(searchParams);
+  };
   return (
     <Card className="w-full max-w-md cursor-pointer">
       <CardHeader>
@@ -18,7 +24,7 @@ export const ProductCard: React.FC<{ data: Product }> = ({ data }) => {
             </p>
           </div>
           <div>
-            <Button>Buy</Button>
+            <Button onClick={() => chooseProduct()}>Buy</Button>
           </div>
         </div>
       </CardContent>

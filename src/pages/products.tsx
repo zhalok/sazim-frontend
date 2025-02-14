@@ -1,13 +1,14 @@
 import { getAllProducts } from "@/api/product";
 import { PaginationBar } from "@/components/pagination";
+import PlaceOrderModal from "@/components/place-order-modal";
 import { Products } from "@/components/products";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
 export const AllProducts = () => {
-  const urlParams = new URLSearchParams(window.location.search);
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = parseInt(urlParams.get("page") || "1", 10);
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  searchParams.delete("product");
 
   const {
     data: productsData,
@@ -32,6 +33,7 @@ export const AllProducts = () => {
 
   return (
     <div className="w-full flex flex-col gap-2">
+      <PlaceOrderModal />
       <Products products={data} />
       {pagination && (
         <PaginationBar
