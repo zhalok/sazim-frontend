@@ -14,6 +14,8 @@ import { cancelOrder } from "@/api/order";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import CancelOrder from "./cancel-order";
+import OrderStatus from "./order-status";
+import { Badge } from "./ui/badge";
 
 interface Order {
   id: string;
@@ -49,7 +51,10 @@ export function OrderList({ orders }: OrderListProps) {
             <TableRow key={order.id}>
               <TableCell>{order.id}</TableCell>
               <TableCell>${order.totalAmount.toFixed(2)}</TableCell>
-              <TableCell>{order.status}</TableCell>
+              <TableCell>
+                {" "}
+                <Badge variant="secondary">{order.status}</Badge>
+              </TableCell>
               <TableCell>
                 <div className="space-x-2">
                   <CancelOrder id={order.id} orderStatus={order.status} />
