@@ -3,6 +3,7 @@ import { PaginationBar } from "@/components/pagination";
 import PlaceOrderModal from "@/components/place-order-modal";
 import { Products } from "@/components/products";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const AllProducts = () => {

@@ -14,6 +14,15 @@ import { useMatch, useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createOrder } from "@/api/order";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@radix-ui/react-select";
 
 export default function OrderModal({}) {
   const [searchParams] = useSearchParams();
@@ -24,6 +33,7 @@ export default function OrderModal({}) {
     email: "",
     address: "",
     phone: "",
+    orderType: "",
   });
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -70,6 +80,11 @@ export default function OrderModal({}) {
 
     setOpen(false);
   };
+
+  const handleSelectChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, orderType: value }));
+  };
+
   useEffect(() => {
     const selectedProduct = searchParams.get("product");
     if (selectedProduct) setOpen(true);
@@ -124,9 +139,28 @@ export default function OrderModal({}) {
               required
             />
           </div>
-          <Button type="submit" className="w-full">
-            Place Order
-          </Button>
+          <div className="space-y-2">
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a fruit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Fruits</SelectLabel>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Button type="submit" className="w-full">
+              Place Order
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
