@@ -2,8 +2,8 @@ import { getAllOrders } from "@/api/order";
 import { OrderList } from "@/components/orders-list";
 import { PaginationBar } from "@/components/pagination";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useSearchParams } from "react-router-dom";
 
 export default function SellerOrders() {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,12 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Login from "./pages/auth/login";
 import LoginLayout from "./pages/auth/layout";
-import SellerLayout from "./pages/seller/layout";
-import { SellerProducts } from "./pages/seller/products";
-import { AllProducts } from "./pages/products";
+import Login from "./pages/auth/login";
 import Order from "./pages/order";
 import Orders from "./pages/orders";
+import { AllProducts } from "./pages/products";
+import SellerLayout from "./pages/seller/layout";
 import SellerOrders from "./pages/seller/orders";
+import { SellerProducts } from "./pages/seller/products";
 
 function App() {
   return (

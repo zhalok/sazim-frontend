@@ -102,7 +102,7 @@ export async function createProduct(productData: Omit<Product, "id">) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }
+    },
   );
   if ("errors" in response.data) {
     throw new Error(response.data.errors[0].message);

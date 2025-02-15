@@ -1,6 +1,5 @@
 import { getProductCategories } from "@/api/product";
 import { getMyProducts } from "@/api/products";
-import AddProductButton from "@/components/add-product-button";
 import AddProductModal from "@/components/create-product-modal";
 import { Products } from "@/components/products";
 import { useQuery } from "@tanstack/react-query";
@@ -41,7 +40,7 @@ export const SellerProducts = () => {
 
   if (!productsData) return <>No Product Data</>;
 
-  const { data, pagination }: any = productsData;
+  const { data }: any = productsData;
 
   return (
     <div className="w-full flex flex-col gap-2">
@@ -49,7 +48,7 @@ export const SellerProducts = () => {
         {" "}
         <AddProductModal />
       </div>
-      <Products products={data} pagination={pagination} />
+      <Products products={data} />
     </div>
   );
 };

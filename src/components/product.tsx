@@ -1,8 +1,8 @@
 import { Product } from "@/types/Product";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
 import { useSearchParams } from "react-router-dom";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export const ProductCard: React.FC<{ data: Product }> = ({ data }) => {
   const { id, name, description, categories } = data;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { createProduct } from "@/api/product";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,15 +9,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ProductCategory } from "@/types/Product";
-import { createProduct } from "@/api/product";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { ProductCategory } from "@/types/Product";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function AddProductModal() {
   const { toast } = useToast();

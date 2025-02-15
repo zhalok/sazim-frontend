@@ -1,8 +1,8 @@
 "use client";
 
+import { makePayment } from "@/api/payment";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { makePayment } from "@/api/payment";
 
 export default function PaymentButton({ paymentId }: { paymentId: string }) {
   const queryClient = useQueryClient();

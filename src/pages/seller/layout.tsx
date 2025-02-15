@@ -1,6 +1,6 @@
 import { authMe } from "@/api/auth";
 import { useEffect } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const SellerLayout = () => {
   const navigate = useNavigate();

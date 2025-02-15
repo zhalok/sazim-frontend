@@ -7,21 +7,24 @@ export const authMe = async () => {
       vslid: false,
     };
   try {
-    const { data } = await instance.post("/graphql", {
-      query: `
+    const { data } = await instance.post(
+      "/graphql",
+      {
+        query: `
         query AuthMe {
           authMe {
             valid
           }
         }
       `,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Token passed in Authorization header
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Token passed in Authorization header
+        },
+      },
+    );
     return data.data.authMe;
   } catch (e) {
     return {
@@ -49,7 +52,7 @@ export const login = async ({
       email,
       password,
     },
-  },);
+  });
   const { accessToken } = data.data.login;
   localStorage.setItem("token", accessToken);
   return accessToken;

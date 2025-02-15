@@ -74,7 +74,7 @@ export async function getMyProducts({
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }
+      },
     );
     console.log("response", response);
     return response.data.data.myProducts;

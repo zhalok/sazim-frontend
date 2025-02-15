@@ -1,4 +1,3 @@
-import axios from "axios";
 import instance from ".";
 
 const graphqlEndpoint = "graphql"; // Replace with your actual GraphQL endpoint
@@ -58,7 +57,7 @@ export async function createOrder({
           "Content-Type": "application/json",
           Authorization: `Bearer YOUR_ACCESS_TOKEN`, // Replace with actual token if needed
         },
-      }
+      },
     );
 
     console.log("Order Created:", response.data);
@@ -138,7 +137,7 @@ export async function getMyOrders({
         "Content-Type": "application/json",
         Authorization: `Bearer ${customerToken}`, // Replace with actual token if needed
       },
-    }
+    },
   );
 
   return response.data.data.myOrders;
@@ -182,7 +181,7 @@ export async function getAllOrders({
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with actual token if needed
       },
-    }
+    },
   );
 
   return response.data.data.orders;
@@ -224,7 +223,7 @@ export async function cancelOrder({
       headers: {
         Authorization: `Bearer ${customerToken}`,
       },
-    }
+    },
   );
   if ("errors" in response.data) {
     if (response.data.errors.length === 0)
@@ -259,7 +258,7 @@ export async function completeOrder(id: string) {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }
+    },
   );
 
   if ("errors" in response.data) {
@@ -292,7 +291,7 @@ export async function deleteOrder(orderId: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with actual token if needed
       },
-    }
+    },
   );
 
   if ("errors" in response.data) {
@@ -326,7 +325,7 @@ export async function createToken(email: string) {
     console.error(
       "Error creating token:",
       //@ts-ignore
-      error.response ? error.response.data : error.message
+      error.response ? error.response.data : error.message,
     );
   }
 }
