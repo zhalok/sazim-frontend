@@ -192,14 +192,16 @@ export async function cancelOrder({
   id,
   email,
   reason,
+  customerToken,
 }: {
   id: string;
   email: string;
   reason: string;
+  customerToken: string;
 }) {
   const mutation = `
-  mutation CancelOrder($id: String!, $email: String!, $reason: String!) {
-      cancelOrder(id: $id, email: $email, reason: $reason) {
+  mutation CancelOrder($id: String!, $reason: String!) {
+      cancelOrder(id: $id, reason: $reason) {
           id
           status
       }
@@ -212,10 +214,18 @@ export async function cancelOrder({
     reason,
   };
 
-  const response = await instance.post(graphqlEndpoint, {
-    query: mutation,
-    variables: variables,
-  });
+  const response = await instance.post(
+    graphqlEndpoint,
+    {
+      query: mutation,
+      variables: variables,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${customerToken}`,
+      },
+    }
+  );
   if ("errors" in response.data) {
     if (response.data.errors.length === 0)
       throw new Error("Something went wrong");
@@ -259,6 +269,39 @@ export async function completeOrder(id: string) {
   }
 
   return response.data.data.completeOrder;
+}
+
+export async function deleteOrder(orderId: string) {
+  const mutation = `
+        mutation DeleteOrder($id: String!) {
+            deleteOrder(id: $id)
+        }
+    `;
+  const variables = {
+    id: orderId,
+  };
+
+  const response = await instance.post(
+    graphqlEndpoint,
+    {
+      query: mutation,
+      variables: variables,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with actual token if needed
+      },
+    }
+  );
+
+  if ("errors" in response.data) {
+    if (response.data.errors.length === 0)
+      throw new Error("Something went wrong");
+    throw new Error(response.data.errors[0].message);
+  }
+
+  return response.data.data.deleteOrder;
 }
 
 export async function createToken(email: string) {

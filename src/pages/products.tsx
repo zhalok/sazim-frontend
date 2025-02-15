@@ -31,6 +31,7 @@ export const AllProducts = () => {
   useEffect(() => {
     if (searchParams.get("openEmailCollectionModal")) {
       setShowEmailCollectionModal(true);
+      searchParams.delete("openEmailCollectionModal");
     }
   }, [searchParams]);
 
@@ -47,7 +48,9 @@ export const AllProducts = () => {
       <PlaceOrderModal />
       <GetEmailForOrdersModal
         isOpen={showEmailCollectionModal}
-        onClose={() => setShowEmailCollectionModal(false)}
+        onClose={() => {
+          setShowEmailCollectionModal(false);
+        }}
       />
       <Button onClick={() => setShowEmailCollectionModal(true)}>
         My Orders

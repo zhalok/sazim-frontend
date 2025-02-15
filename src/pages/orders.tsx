@@ -39,7 +39,7 @@ export default function Orders() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-6">Orders</h1>
-      <OrderList orders={data} />
+      <OrderList orders={data} role={"USER"} />
     </div>
   );
 }

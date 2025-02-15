@@ -26,17 +26,15 @@ interface Order {
 
 interface OrderListProps {
   orders: Order[];
+  role: string;
 }
 
-export function OrderList({ orders }: OrderListProps) {
-  const { toast } = useToast();
+export function OrderList({ orders, role }: OrderListProps) {
   const navigate = useNavigate();
 
   const handleView = (id: string) => {
     navigate(`/orders/${id}`);
   };
-
-  const token = localStorage.getItem("token");
 
   return (
     <>
@@ -60,8 +58,10 @@ export function OrderList({ orders }: OrderListProps) {
               </TableCell>
               <TableCell>
                 <div className="space-x-2">
-                  <CancelOrder id={order.id} orderStatus={order.status} />
-                  {token && (
+                  {role === "USER" && (
+                    <CancelOrder id={order.id} orderStatus={order.status} />
+                  )}
+                  {role === "SELLER" && (
                     <CompleteOrder id={order.id} orderStatus={order.status} />
                   )}
                   <Button

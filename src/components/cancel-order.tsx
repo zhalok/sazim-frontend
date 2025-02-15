@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { cancelOrder } from "@/api/order";
 import { useToast } from "@/hooks/use-toast";
+import { useSearchParams } from "react-router-dom";
 
 export default function CancelOrder({
   id,
@@ -20,6 +21,8 @@ export default function CancelOrder({
   id: string;
   orderStatus: string;
 }) {
+  const [searchParams] = useSearchParams();
+  const customerToken = searchParams.get("customerToken");
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -47,6 +50,7 @@ export default function CancelOrder({
       id,
       email: "rahmanzhalok@gmail.com",
       reason: "",
+      customerToken: customerToken || "",
     });
   };
 

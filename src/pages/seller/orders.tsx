@@ -3,6 +3,7 @@ import { OrderList } from "@/components/orders-list";
 import { PaginationBar } from "@/components/pagination";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function SellerOrders() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,11 @@ export default function SellerOrders() {
     queryFn: () => getAllOrders({ limit: 10, page }),
     queryKey: ["orders", page],
   });
+
+  const token = localStorage.getItem("token");
+  const decoded = token ? jwtDecode(token) : null;
+  console.log("decoded", decoded);
+
   const queryClient = useQueryClient();
 
   if (isAllOrdersLoading) return <>Loading</>;
@@ -27,7 +33,7 @@ export default function SellerOrders() {
 
   return (
     <>
-      <OrderList orders={data} />
+      <OrderList orders={data} role="SELLER" />
       {pagination && (
         <PaginationBar
           limit={pagination.limit}

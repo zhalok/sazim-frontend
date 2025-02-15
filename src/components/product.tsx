@@ -7,6 +7,9 @@ export const ProductCard: React.FC<{ data: Product }> = ({ data }) => {
   const { id, name, description, categories } = data;
   const [searchParams, setSearchParams] = useSearchParams();
   const chooseProduct = () => {
+    // const otherKeys = searchParams.keys();
+    searchParams.delete("openEmailCollectionModal");
+
     searchParams.set("product", id);
     setSearchParams(searchParams);
   };
