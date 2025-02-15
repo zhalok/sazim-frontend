@@ -17,6 +17,7 @@ import CancelOrder from "./cancel-order";
 import OrderStatus from "./order-status";
 import { Badge } from "./ui/badge";
 import CompleteOrder from "./complete-order";
+import DeleteOrder from "./delete-order";
 
 interface Order {
   id: string;
@@ -62,7 +63,10 @@ export function OrderList({ orders, role }: OrderListProps) {
                     <CancelOrder id={order.id} orderStatus={order.status} />
                   )}
                   {role === "SELLER" && (
-                    <CompleteOrder id={order.id} orderStatus={order.status} />
+                    <>
+                      <CompleteOrder id={order.id} orderStatus={order.status} />
+                      <DeleteOrder id={order.id} orderStatus={order.status} />
+                    </>
                   )}
                   <Button
                     variant="default"
