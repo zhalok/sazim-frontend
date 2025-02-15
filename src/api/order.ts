@@ -144,6 +144,50 @@ export async function getMyOrders({
   return response.data.data.myOrders;
 }
 
+export async function getAllOrders({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}) {
+  const query = `
+        query Orders($limit: Int!, $page: Int!) {
+            orders(limit: $limit, page: $page) {
+                pagination {
+                    limit
+                    page
+                    total
+                }
+                data {
+                    id
+                    totalAmount
+                    status
+                }
+            }
+        }
+    `;
+  const variables = {
+    limit,
+    page,
+  };
+  const response = await instance.post(
+    graphqlEndpoint,
+    {
+      query: query,
+      variables: variables,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with actual token if needed
+      },
+    }
+  );
+
+  return response.data.data.orders;
+}
+
 export async function cancelOrder({
   id,
   email,
@@ -172,8 +216,49 @@ export async function cancelOrder({
     query: mutation,
     variables: variables,
   });
+  if ("errors" in response.data) {
+    if (response.data.errors.length === 0)
+      throw new Error("Something went wrong");
+    throw new Error(response.data.errors[0].message);
+  }
 
   return response.data.data.cancelOrder;
+}
+
+export async function completeOrder(id: string) {
+  const mutation = `
+  mutation CompleteOrder($id: String!) {
+      completeOrder(id: $id) {
+          id
+          status
+      }
+  }
+`;
+
+  const variables = {
+    id,
+  };
+
+  const response = await instance.post(
+    graphqlEndpoint,
+    {
+      query: mutation,
+      variables: variables,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  if ("errors" in response.data) {
+    if (response.data.errors.length === 0)
+      throw new Error("Something went wrong");
+    throw new Error(response.data.errors[0].message);
+  }
+
+  return response.data.data.completeOrder;
 }
 
 export async function createToken(email: string) {

@@ -6,6 +6,7 @@ import { SellerProducts } from "./pages/seller/products";
 import { AllProducts } from "./pages/products";
 import Order from "./pages/order";
 import Orders from "./pages/orders";
+import SellerOrders from "./pages/seller/orders";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             </Route>
             <Route path="/seller" element={<SellerLayout />}>
               <Route path="/seller/products" element={<SellerProducts />} />
+              <Route path="/seller/orders" element={<SellerOrders />} />
             </Route>
             <Route index element={<AllProducts />} />
             <Route path="/orders/:id" element={<Order />} />

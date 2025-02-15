@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import CancelOrder from "./cancel-order";
 import OrderStatus from "./order-status";
 import { Badge } from "./ui/badge";
+import CompleteOrder from "./complete-order";
 
 interface Order {
   id: string;
@@ -34,6 +35,8 @@ export function OrderList({ orders }: OrderListProps) {
   const handleView = (id: string) => {
     navigate(`/orders/${id}`);
   };
+
+  const token = localStorage.getItem("token");
 
   return (
     <>
@@ -58,6 +61,9 @@ export function OrderList({ orders }: OrderListProps) {
               <TableCell>
                 <div className="space-x-2">
                   <CancelOrder id={order.id} orderStatus={order.status} />
+                  {token && (
+                    <CompleteOrder id={order.id} orderStatus={order.status} />
+                  )}
                   <Button
                     variant="default"
                     size="sm"
